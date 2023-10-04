@@ -11,19 +11,24 @@ import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';
 
 import {StreamChat} from 'stream-chat'; //core library
-import { useEffect, useState } from 'react';  //react hooks
-import { Text } from 'react-native';
-import {OverlayProvider, Chat, ChannelList, Channel, MessageList, Message, MessageInput} from 'stream-chat-expo'; //UI components
+import { useEffect } from 'react';  //react hooks
+
+import {OverlayProvider, Chat, DeepPartial, Theme} from 'stream-chat-expo'; //UI components
 import AuthContext from './src/context/AuthContext'; 
+import { DarkColors } from './src/constants/Colors';
 
 
 const API_KEY="yspae49hvbx8";     //API KEY FOR OUR APP
 const client= StreamChat.getInstance(API_KEY);  //creates the client and the connection with the server, only the first time
+const theme: DeepPartial<Theme> ={
+  colors: DarkColors,
+//for dark mode, use this theme
+};
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
-  const[selectedChannel, setSelectedChannel]=useState(null);
+  
 
 
   useEffect(()=>{
@@ -37,9 +42,9 @@ export default function App() {
 
   },[]) //empty dependency []
 
-  const onChannelSelect = (channel)=> {
-    setSelectedChannel(channel);
-  };
+
+
+
 
   if (!isLoadingComplete) {
     return null;
@@ -49,25 +54,8 @@ export default function App() {
         <AuthContext>
           <OverlayProvider> 
             <Chat client={client}>
-            
+
               <Navigation colorScheme={colorScheme} />
-            {/* {!selectedChannel ? (
-            <ChannelList onSelect={onChannelSelect}/>
-            ):(
-              <>
-              <Channel channel={selectedChannel}> 
-              
-              <Text style={{margin:50}} onPress={()=> setSelectedChannel(null)}>
-              GO BACK
-              </Text>
-
-              <MessageList/>
-              <MessageInput/>
-
-              </Channel>
-              </>
-            )
-            } */}
             
             </Chat>
           </OverlayProvider>

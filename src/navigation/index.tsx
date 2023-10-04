@@ -19,6 +19,8 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../
 import LinkingConfiguration from './LinkingConfiguration';
 import SignUpScreen from '../screens/SignUpScreen';
 import { useAuthContext } from '../context/AuthContext';
+import DrawerNavigator from './DrawerNavigator';
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -49,9 +51,9 @@ function RootNavigator() {
       )
       :
       (
-
+          //ROOT
       <>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Root" component={DrawerNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       </>
 
